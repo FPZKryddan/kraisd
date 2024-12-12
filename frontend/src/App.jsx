@@ -90,7 +90,10 @@
         }, [submitPrompt])
 
         const toggleRandomize = () => {
+            if (!randomize)
+                setSeed(Math.floor(Math.random() * 10000000))
             setRandomize(!randomize)
+            
         }
 
         useEffect(() => {
@@ -112,32 +115,34 @@
                                 p-5 gap-2">
                     <h1 className="text-white text-center text-3xl font-bold">Generation settings</h1>
 
-                    <label htmlFor="prompt" className='text-white'>Prompt</label>
+                    <label htmlFor="prompt" className='text-white text-xl'>Prompt</label>
                     <textarea className="p-3 rounded-md" id='prompt' type='text' rows="5" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
 
-                    <label htmlFor="negprompt" className='text-white'>Negative Prompt</label>
+                    <label htmlFor="negprompt" className='text-white text-xl'>Negative Prompt</label>
                     <textarea className="p-3 rounded-md" id='negprompt' type='text' rows="5" placeholder='Type negative prompt here...' value={negPrompt} onChange={(e) => setNegPrompt(e.target.value)}></textarea>
 
                     <div className='flex flex-row gap-10'>
                         <div className='flex flex-col basis-1/2'>
-                            <label htmlFor='steps' className='text-white'>Steps: {steps}</label>
+                            <label htmlFor='steps' className='text-white text-xl'>Steps: {steps}</label>
                             <input className="" type='range' min="1" max="200" step="1"id="steps" value={steps} onChange={(e) => setSteps(e.target.value)}></input>
 
                         </div>
 
                         <div className='flex flex-col basis-1/2'>
-                            <label htmlFor='cfg' className='text-white'>Guidance Scale: {cfg}</label>
+                            <label htmlFor='cfg' className='text-white text-xl'>Guidance Scale: {cfg}</label>
                             <input className="" type='range' min="1" max="30" step="0.5" id="cfg" value={cfg} onChange={(e) => setCFG(e.target.value)}></input>
                         </div>
                     </div>
 
-                    <label htmlFor='seed' className='text-white'>Seed:</label>
-                    <input className="p-2 rounded-md" type='number' max="10000000" id="seed" value={seed} onChange={(e) => setSeed(e.target.value)}></input>
-                    <label htmlFor='randomizeCheck' className='text-white'>Randomize seed?</label>
-                    <input id="randomizeCheck" type="checkbox" checked={randomize} onClick={toggleRandomize}></input>
+                    <label htmlFor='seed' className='text-white text-xl'>Seed:</label>
+                    <input className="p-2 rounded-md" type='number' max="10000000" id="seed" value={seed} disabled={randomize} onChange={(e) => setSeed(e.target.value)}></input>
+                    <div className='flex flex-row gap-2 text-xl'>
+                        <label htmlFor='randomizeCheck' className='text-white'>Randomize seed?</label>
+                        <input id="randomizeCheck" className="size-6 self-end" type="checkbox" checked={randomize} onClick={toggleRandomize}></input>
+                    </div>
 
-                    <button className="bg-blue-600 rounded-md border-2 border-black self-center m-5 p-2
-                                        hover:bg-blue-900 text-white text-2xl shadow-lg hover:scale-95 hover:rounded-full 
+                    <button className="bg-blue-500 rounded-md self-center m-5 p-2
+                                        hover:bg-blue-900 text-white text-2xl shadow-lg hover:shadow-2xl hover:drop-shadow-2xl
                                         transition-all duration-100 ease-in-out"
                     onClick={submitPrompt}>Generate Image</button>
                 </div>
@@ -147,7 +152,7 @@
                         <progress id="generationProgress" className="w-full" value={generatedSteps} max={totalGenerationSteps}></progress>
 
                     </div>
-                    {image && <img className="self-center shadow-xl drop-shadow-2xl hover:cursor-pointer hover:border-8 transition-all duration-75 ease-in-out" src={image} width={1024} height={1024}/>}
+                    {image && <img className="self-center shadow-xl drop-shadow-2xl hover:cursor-pointer hover:border-8 transition-all duration-75 ease-in-out" src={image} style={{ width: "auto", height: "auto" }}/>}
                 </div>
                 <div className="flex flex-col basis-1/5 h-full p-5 bg-slate-500 bg-opacity-30 rounded-lg border-white border-2">
                     <h2 className='text-center text-2xl text-white border-b-2' >Queue</h2>
