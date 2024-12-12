@@ -36,7 +36,7 @@ height = 512
 # prompt = "masterpiece, best quality, fantasy medieval castle, hills, grassfield"
 
 
-def generate_image(input, negPrompt, steps, cfg, seed):
+def generate_image(input, negPrompt, steps, cfg, seed, callback):
     genSeed = torch.Generator(device).manual_seed(int(seed))
     image = pipe(
         prompt=input,
@@ -47,8 +47,8 @@ def generate_image(input, negPrompt, steps, cfg, seed):
         num_images_per_prompt=1,
         negative_prompt=negPrompt,
         added_cond_kwargs={},
-        generator=genSeed
-        
+        generator=genSeed,
+        callback_on_step_end=callback
     ).images[0]
     buffer = io.BytesIO()
     image.save(buffer, format="JPEG")
