@@ -7,7 +7,6 @@ import threading
 import time
 
 
-
 app = Flask(__name__)
 CORS(app, resources={r"*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins='*')
@@ -56,6 +55,11 @@ def queue(prompt):
     update_client_queue(request.sid)
 
 
+def report_progress(pipe, step, timestep, callback_kwargs):
+    socketio.emit("generation_update", {"step": step})
+    return callback_kwargs
+
+
 def update_client_queue(sid):
     client_queue = [{"id": idx, "item": item.get("req")} for idx, item in enumerate(prompt_queue) if item.get("sid") == sid]
     socketio.emit("get_queue", {"queue": client_queue})
@@ -75,8 +79,9 @@ def worker():
             seed = int(task.get("seed"))
 
             try:
-                image = sd.generate_image(prompt, negPrompt, steps, cfg, seed)
-                socketio.emit("task_complete", {"image": image})
+                socketio.emit("generation_started", {"total_steps": steps})
+                image = sd.generate_image(prompt, negPrompt, steps, cfg, seed, report_progress)
+                socketio.emit("generation_completed", {"image": image})
                 update_client_queue(client)
             except Exception as e:
                 print(f"ERROR: {str(e)}")
