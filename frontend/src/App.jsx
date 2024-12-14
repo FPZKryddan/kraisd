@@ -114,7 +114,7 @@
                             bg-primary-indigo
                             flex flex-row justify-center gap-[20px]">
                 <div className="flex flex-col basis-[60%] gap-5">
-                    <h1 className='text-6xl text-text-primary text-center font-extrabold mt-[70px] relative'>KRAISD</h1>
+                    <h1 className='text-6xl text-text-primary text-center font-extrabold mt-[70px] relative drop-shadow-2xl'>KRAISD</h1>
                     <textarea className="p-3 rounded-md w-2/3 self-center text-text-black placeholder:text-text-muted border-neutral-muted border-2" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 </div>
                 {/* <div className="flex flex-col basis-1/5 h-full 
