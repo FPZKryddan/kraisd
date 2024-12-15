@@ -2,6 +2,7 @@ import { useState, useEffect, useCallback } from 'react'
 import './App.css'
 import {io} from 'socket.io-client'
 import { HiOutlineCog8Tooth, HiArrowPath } from "react-icons/hi2";
+import SettingsDrawer from './components/SettingsDrawer';
 
 
 function App() {
@@ -21,6 +22,8 @@ function App() {
     const [totalGenerationSteps, setTotalGenerationSteps] = useState(0);
     const [generating, setGenerating] = useState(0);
     const api = import.meta.env.VITE_BACKEND_URL;
+
+    const [settingsOpen, setSettingsOpen] = useState(false);
 
     useEffect(() => {
         if (!window.socket) {
@@ -111,6 +114,8 @@ function App() {
             setSeed(Math.floor(Math.random() * 10000000))
     }, [seed])
 
+    const toggleSettings = () => {setSettingsOpen(!settingsOpen)}
+
     return (
         <div className="container max-w-full m-0 p-5 h-screen 
                         bg-primary-indigo
@@ -119,11 +124,12 @@ function App() {
                 <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
                 <textarea className="p-3 rounded-md w-full self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 <div className='flex flex-row gap-4 justify-center'>
-                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary'><HiOutlineCog8Tooth className='size-[40px] w-full'/></button>
+                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary cursor-pointer'><HiOutlineCog8Tooth className='size-[40px] w-full' onClick={toggleSettings}/></button>
                     <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl text-text-primary text-2xl font-bold'>Generate</button>
                     <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl drop-s text-text-primary relative'><HiArrowPath className='size-[40px] w-full'/><p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full'>1</p></button>
                 </div>
             </div>
+            <SettingsDrawer settingsOpen={settingsOpen} closeSettings={toggleSettings}/>
             {/* <div className="flex flex-col basis-1/5 h-full 
                             bg-secondary-coral
                             rounded-lg border-neutral-muted border-2
