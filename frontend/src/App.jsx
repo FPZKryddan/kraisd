@@ -117,11 +117,11 @@ function App() {
                         flex flex-col justify-center">
             <div className="flex flex-col h-full gap-5">
                 <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
-                <textarea className="p-3 rounded-md w-full self-center text-text-black placeholder:text-text-muted placeholder:text-center border-neutral-muted border-2" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
+                <textarea className="p-3 rounded-md w-full self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 <div className='flex flex-row gap-4 justify-center'>
                     <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary'><HiOutlineCog8Tooth className='size-[40px] w-full'/></button>
-                    <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl text-text-primary'>Generate</button>
-                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary'><HiArrowPath className='size-[40px] w-full'/></button>
+                    <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl text-text-primary text-2xl font-bold'>Generate</button>
+                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl drop-s text-text-primary relative'><HiArrowPath className='size-[40px] w-full'/><p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full'>1</p></button>
                 </div>
             </div>
             {/* <div className="flex flex-col basis-1/5 h-full 
