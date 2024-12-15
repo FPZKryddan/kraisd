@@ -29,8 +29,12 @@ export default {
         muted: '#A0A3B1',
         black: '#000'
       }
-
+    },
+    extend: { 
+      dropShadow: {
+        '3xl': '0 12px 4px rgba(0, 0, 0, 0.25)'
+      }
     },
   },
   plugins: [],
-}
+};
