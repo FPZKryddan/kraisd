@@ -1,6 +1,7 @@
     import { useState, useEffect, useCallback } from 'react'
     import './App.css'
     import {io} from 'socket.io-client'
+    //import {ReactComponent as Logo} from '/logo.svg'
 
     function App() {
         const [image, setImage] = useState(null);
@@ -112,10 +113,15 @@
         return (
             <div className="container max-w-full m-0 p-5 h-screen 
                             bg-primary-indigo
-                            flex flex-row justify-center gap-[20px]">
-                <div className="flex flex-col basis-[60%] gap-5">
-                    <h1 className='text-6xl text-text-primary text-center font-extrabold mt-[70px] relative drop-shadow-2xl'>KRAISD</h1>
-                    <textarea className="p-3 rounded-md w-2/3 self-center text-text-black placeholder:text-text-muted border-neutral-muted border-2" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
+                            flex flex-col justify-center">
+                <div className="flex flex-col h-full gap-5">
+                    <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
+                    <textarea className="p-3 rounded-md w-full self-center text-text-black placeholder:text-text-muted placeholder:text-center border-neutral-muted border-2" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
+                    <div className='flex flex-row gap-4 justify-center'>
+                        <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-2xl text-text-primary'></button>
+                        <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-2xl text-text-primary'>Generate</button>
+                        <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-2xl text-text-primary'></button>
+                    </div>
                 </div>
                 {/* <div className="flex flex-col basis-1/5 h-full 
                                 bg-secondary-coral

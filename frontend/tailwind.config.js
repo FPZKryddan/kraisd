@@ -19,8 +19,8 @@ export default {
         blue: '#4F46E5'
       },
       neutral: {
-        light: '#F5f5f5',
-        soft: '#E5E7EB',
+        light: '#374151',
+        black: '#000000',
         muted: '#D1D5DB'
       },
       text: {
