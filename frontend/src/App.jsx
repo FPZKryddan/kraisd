@@ -8,13 +8,6 @@ import SettingsDrawer from './components/SettingsDrawer';
 function App() {
     const [image, setImage] = useState(null);
 
-    const [prompt, setPrompt] = useState("");
-    const [negPrompt, setNegPrompt] = useState("");
-    const [steps, setSteps] = useState(20);
-    const [cfg, setCFG] = useState(7);
-    const [seed, setSeed] = useState(null);
-    const [randomize, setRandomize] = useState(true);
-
     const [socket, setSocket] = useState(null);
     const [queue, setQueue] = useState([]);
 
@@ -83,23 +76,14 @@ function App() {
         // fetch(api + 'api', opts)
         //     .then(response => response.json())
         //     .then(data => setImage(decodeBase64Image(data.image)));
-        socket.emit("queue", {prompt: prompt, negPrompt: negPrompt, steps: steps, cfg: cfg, seed: seed})
-        if (randomize)
-            setSeed(Math.floor(Math.random() * 10000000))
-    }, [api, prompt, negPrompt, steps, cfg, seed, randomize])
+        //socket.emit("queue", {prompt: prompt, negPrompt: negPrompt, steps: steps, cfg: cfg, seed: seed})
+    }, [api, prompt])
 
     const handleKeyPress = useCallback((e) => {
         if (e.key == "Enter") {
             submitPrompt()
         }
     }, [submitPrompt])
-
-    const toggleRandomize = () => {
-        if (!randomize)
-            setSeed(Math.floor(Math.random() * 10000000))
-        setRandomize(!randomize)
-        
-    }
 
     useEffect(() => {
         window.addEventListener("keyup", handleKeyPress);
@@ -109,10 +93,7 @@ function App() {
         }
     }, [handleKeyPress])
 
-    useEffect(() => {
-        if (seed == null)
-            setSeed(Math.floor(Math.random() * 10000000))
-    }, [seed])
+
 
     const toggleSettings = () => {setSettingsOpen(!settingsOpen)}
 
@@ -122,7 +103,7 @@ function App() {
                         flex flex-col justify-center">
             <div className="flex flex-col h-full gap-5">
                 <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
-                <textarea className="p-3 rounded-md w-full self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
+                <textarea className="p-3 rounded-md w-full md:w-1/2 self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 <div className='flex flex-row gap-4 justify-center'>
                     <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary cursor-pointer'><HiOutlineCog8Tooth className='size-[40px] w-full' onClick={toggleSettings}/></button>
                     <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl text-text-primary text-2xl font-bold'>Generate</button>
