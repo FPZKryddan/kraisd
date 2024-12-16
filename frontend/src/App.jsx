@@ -8,6 +8,7 @@ import SettingsDrawer from './components/SettingsDrawer';
 function App() {
     const [image, setImage] = useState(null);
 
+    const [prompt, setPrompt] = useState("");
     const [socket, setSocket] = useState(null);
     const [queue, setQueue] = useState([]);
 
@@ -93,7 +94,10 @@ function App() {
         }
     }, [handleKeyPress])
 
-
+    const handleClick = () => {
+        if (settingsOpen)
+            toggleSettings()
+    }
 
     const toggleSettings = () => {setSettingsOpen(!settingsOpen)}
 
@@ -101,7 +105,7 @@ function App() {
         <div className="container max-w-full m-0 p-5 h-screen 
                         bg-primary-indigo
                         flex flex-col justify-center">
-            <div className="flex flex-col h-full gap-5">
+            <div className="flex flex-col h-full gap-5" onClick={handleClick}>
                 <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
                 <textarea className="p-3 rounded-md w-full md:w-1/2 self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 <div className='flex flex-row gap-4 justify-center'>
