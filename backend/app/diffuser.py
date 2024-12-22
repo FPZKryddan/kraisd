@@ -28,15 +28,15 @@ helper.set_params(cache_interval=3, cache_branch_id=0)
 helper.enable()
 
 # Generation settings
-width = 512
-height = 512
+# width = 512
+# height = 512
 # batch_size = 1
 # generation_steps = 25
 # cfg = 7
 # prompt = "masterpiece, best quality, fantasy medieval castle, hills, grassfield"
 
 
-def generate_image(input, negPrompt, steps, cfg, seed, callback):
+def generate_image(input, negPrompt, steps, cfg, seed, width, height, callback):
     genSeed = torch.Generator(device).manual_seed(int(seed))
     image = pipe(
         prompt=input,

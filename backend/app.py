@@ -12,7 +12,10 @@ CORS(app, resources={r"*": {"origins": "*"}})
 socketio = SocketIO(app, cors_allowed_origins='*')
 
 
-prompt_queue = deque()
+task_queue = deque()
+
+clients = []
+active_task = {}
 
 @app.route('/api', methods=["POST"])
 def index():
@@ -41,35 +44,36 @@ def index():
 
 @socketio.on("connect")
 def connected():
-    print(request.sid)
-    print("client has connected")
-    emit("join",{"data":f"id: {request.sid} is connected"})
+    client = request.sid
+    clients.append(client)
+    print(f"{client} client has connected")
+    emit("join",{"data":f"id: {client} is connected"})
 
 @socketio.on("queue")
-def queue(prompt):
+def queue(task):
     print(request.sid)
     # TODO validate prompt data
-    task = {"sid": request.sid, "req": prompt}
-    prompt_queue.append(task)
+    task_queue.append({"sid": request.sid, "req": task})
 
     update_client_queue(request.sid)
 
 
 def report_progress(pipe, step, timestep, callback_kwargs):
-    socketio.emit("generation_update", {"step": step})
+    client = active_task.get("sid")
+    socketio.emit("generation_update", {"step": step}, room=client)
     return callback_kwargs
 
 
-def update_client_queue(sid):
-    client_queue = [{"id": idx, "item": item.get("req")} for idx, item in enumerate(prompt_queue) if item.get("sid") == sid]
-    socketio.emit("get_queue", {"queue": client_queue})
+def update_client_queue(client):
+    client_queue = [{"id": idx, "item": item.get("req")} for idx, item in enumerate(task_queue) if item.get("sid") == client]
+    socketio.emit("get_queue", {"queue": client_queue}, room=client)
 
 def worker():
     while True:
-        if prompt_queue:
-            task = prompt_queue.popleft()
-            client = task.get("sid")
-            task = task.get("req")
+        if task_queue:
+            active_task = task_queue.popleft()
+            client = active_task.get("sid")
+            task = active_task.get("req")
             print(f"processing task: {task}")
 
             prompt = task.get("prompt")
@@ -77,11 +81,13 @@ def worker():
             steps = int(task.get("steps"))
             cfg = float(task.get("cfg"))
             seed = int(task.get("seed"))
+            width = int(task.get("width"))
+            height = int(task.get("height"))
 
             try:
-                socketio.emit("generation_started", {"total_steps": steps})
-                image = sd.generate_image(prompt, negPrompt, steps, cfg, seed, report_progress)
-                socketio.emit("generation_completed", {"image": image})
+                socketio.emit("generation_started", {"total_steps": steps}, room=client)
+                image = sd.generate_image(prompt, negPrompt, steps, cfg, seed, width, height, report_progress)
+                socketio.emit("generation_completed", {"image": image}, room=client)
                 update_client_queue(client)
             except Exception as e:
                 print(f"ERROR: {str(e)}")
@@ -90,6 +96,7 @@ def worker():
 
 if __name__ == '__main__':
     #app.run(debug=True)
+    print("Listening on port 5000")
     worker_thread = threading.Thread(target=worker, daemon=True)
     worker_thread.start()
     socketio.run(app, debug=True, port=5000)
