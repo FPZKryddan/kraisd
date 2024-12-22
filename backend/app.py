@@ -57,6 +57,18 @@ def queue(task):
 
     update_client_queue(request.sid)
 
+@socketio.on("delete_task")
+def delete_task(req):
+    to_delete = req.get("task")
+    client = request.sid
+    for task in task_queue:
+        task_req = task.get("req")
+        print(task_req)
+        if to_delete == task_req:
+            task_queue.remove(task)
+            print("removed")
+            break
+    update_client_queue(client)
 
 def report_progress(pipe, step, timestep, callback_kwargs):
     client = active_task.get("sid")
@@ -71,9 +83,11 @@ def update_client_queue(client):
 def worker():
     while True:
         if task_queue:
-            active_task = task_queue.popleft()
+            active_task = task_queue.popleft() 
             client = active_task.get("sid")
             task = active_task.get("req")
+
+            update_client_queue(client)
             print(f"processing task: {task}")
 
             prompt = task.get("prompt")
@@ -92,7 +106,7 @@ def worker():
             except Exception as e:
                 print(f"ERROR: {str(e)}")
         else:
-            time.sleep(1)
+            time.sleep(0.05)
 
 if __name__ == '__main__':
     #app.run(debug=True)

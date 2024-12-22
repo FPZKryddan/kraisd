@@ -48,7 +48,7 @@ def generate_image(input, negPrompt, steps, cfg, seed, width, height, callback):
         negative_prompt=negPrompt,
         added_cond_kwargs={},
         generator=genSeed,
-        callback_on_step_end=callback
+        callback_on_step_end=callback,
     ).images[0]
     buffer = io.BytesIO()
     image.save(buffer, format="JPEG")

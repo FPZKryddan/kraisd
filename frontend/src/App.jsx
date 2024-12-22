@@ -92,7 +92,6 @@ function App() {
 
     }, [])
 
-    
     const submitPrompt = useCallback(() => {
         socket.emit("queue", {
             prompt: prompt, 
@@ -110,6 +109,11 @@ function App() {
         return `data:${mimeType};base64,${base64Data}`;
     };
     
+    const deleteTask = (task) => {
+        console.log(task)
+        socket.emit("delete_task", {task: task})
+    }
+
     const handleKeyPress = useCallback((e) => {
         if (e.key == "Enter") {
             submitPrompt()
@@ -169,7 +173,7 @@ function App() {
                 </div>
             </div>
             <SettingsDrawer settingsOpen={settingsOpen} closeSettings={toggleSettings} baseSettings={baseSettings} setBaseSettings={setBaseSettings}/>
-            <HistoryDrawer historyOpen={historyOpen} closeHistory={toggleHistory} images={images} setPreview={setPreviewImage}/>
+            <HistoryDrawer historyOpen={historyOpen} closeHistory={toggleHistory} images={images} setPreview={setPreviewImage} queue={queue} deleteTask={deleteTask}/>
 
             { previewImage &&
                 <div className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 w-full h-full'>

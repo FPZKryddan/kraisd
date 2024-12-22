@@ -7,6 +7,11 @@ import { HiMiniXCircle } from "react-icons/hi2";
 const SettingsDrawer = ({settingsOpen, closeSettings, baseSettings, setBaseSettings}) => {
     const [sBaseOpen, setSBaseOpen] = useState(true);
     const [sImage2ImageOpen, setImage2ImageOpen] = useState(false);
+    const [sHiresOpen, setSHiresOpen] = useState(false);
+    const [sXYOpen, setSXYOpen] = useState(false);
+    const [sAdetailerOpen, setSAdetailerOpen] = useState(false);
+    const [sUpscalerOpen, setSUpscalerOpen] = useState(false);
+    const [sModelOpen, setSModelOpen] = useState(false);
     
     const [toggleNegPrompt, setToggleNegPrompt] = useState(false);
     const [resoloutionRadio, setResolutionRadio] = useState(2);
@@ -132,10 +137,12 @@ const SettingsDrawer = ({settingsOpen, closeSettings, baseSettings, setBaseSetti
                     </div>
                 </li>
 
-                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-gradient-to-b to-primary-purple from-primary-indigo brightness-75 hover:brightness-125'>
-                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative' onClick={openI2I}>
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={openI2I}>
                         Image2Image
-                        <span className="absolute h-full"><HiOutlineXMark className="h-full"/></span>
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sImage2ImageOpen ? "" : "-rotate-45")}/>
+                        </span>
                     </h2>
                     <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sImage2ImageOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
                         <div className="flex flex-col mt-2">
@@ -203,6 +210,68 @@ const SettingsDrawer = ({settingsOpen, closeSettings, baseSettings, setBaseSetti
                         </div>
                     </div>
                 </li>
+
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={() => setSHiresOpen(!sHiresOpen)}>
+                        Hires fix
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sHiresOpen ? "" : "-rotate-45")}/>
+                        </span>
+                    </h2>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sHiresOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
+                        <h1 className="text-center text-3xl">WIP!</h1>
+                    </div>
+                </li>
+
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={() => setSXYOpen(!sXYOpen)}>
+                        XY-plot
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sXYOpen ? "" : "-rotate-45")}/>
+                        </span>
+                    </h2>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sXYOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
+                        <h1 className="text-center text-3xl">WIP!</h1>
+                    </div>
+                </li>
+
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={() => setSAdetailerOpen(!sAdetailerOpen)}>
+                        Adetailer
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sAdetailerOpen ? "" : "-rotate-45")}/>
+                        </span>
+                    </h2>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sAdetailerOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
+                        <h1 className="text-center text-3xl">WIP!</h1>
+                    </div>
+                </li>
+
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={() => setSUpscalerOpen(!sUpscalerOpen)}>
+                        Upscaler
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sUpscalerOpen ? "" : "-rotate-45")}/>
+                        </span>
+                    </h2>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sUpscalerOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
+                        <h1 className="text-center text-3xl">WIP!</h1>
+                    </div>
+                </li>
+
+                <li className='w-full flex-row items-center p-2 text-left relative border-[1px] rounded-md border-text-black bg-accent-green'>
+                    <h2 className='text-text-primary w-full ml-2 text-xl font-semibold relative hover:cursor-pointer' onClick={() => setSModelOpen(!sModelOpen)}>
+                        Model picker
+                        <span className="absolute h-full right-5">
+                            <HiMiniXCircle className={"h-full w-full transition-all duration-100 ease-in-out " + (sModelOpen ? "" : "-rotate-45")}/>
+                        </span>
+                    </h2>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden gap-1 border-text-primary text-text-primary text-lg ${sModelOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
+                        <h1 className="text-center text-3xl">WIP!</h1>
+                    </div>
+                </li>
+
+
             </ul>
         </div>
     )
