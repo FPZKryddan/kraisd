@@ -4,6 +4,7 @@ import { HiOutlineCog8Tooth, HiArrowPath } from "react-icons/hi2";
 import SettingsDrawer from './components/SettingsDrawer';
 import HistoryDrawer from './components/HistoryDrawer';
 import { useSocket } from './hooks/useSocket';
+import Progressbar from './components/Progressbar';
 
 
 function App() {
@@ -33,7 +34,7 @@ function App() {
     const [settingsOpen, setSettingsOpen] = useState(false);
     const [historyOpen, setHistoryOpen] = useState(false);
 
-    const socket = useSocket("http://localhost:5000/", {
+    const socket = useSocket("http://10.191.108.121:5051/", {
         transports: ["websocket"],
         cors: {
             origin: "*",
@@ -167,10 +168,7 @@ function App() {
                     ? <img className="self-center shadow-xl drop-shadow-2xl" src={image} style={{ width: "auto", height: "auto" }}/>
                     : <h1 className="self-center text-text-primary text-3xl">No images generated yet! Generate one now!</h1>
                 }
-                <div className={'h-12 w-1/2 mx-auto relative mt-auto rounded-2xl text-text-primary text-lg transition-all duration-200 ease-in-out ' + (generating == true ? "translate-y-0" : "translate-y-96")}>
-                    <h1 className='absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'>Generation steps: {generatedSteps} / {totalGenerationSteps}</h1>
-                    <progress className="w-full h-full rounded-2xl" value={generatedSteps} max={totalGenerationSteps}></progress>
-                </div>
+                <Progressbar visible={generating} value={generatedSteps} max={totalGenerationSteps} />
             </div>
             <SettingsDrawer settingsOpen={settingsOpen} closeSettings={toggleSettings} baseSettings={baseSettings} setBaseSettings={setBaseSettings}/>
             <HistoryDrawer historyOpen={historyOpen} closeHistory={toggleHistory} images={images} setPreview={setPreviewImage} queue={queue} deleteTask={deleteTask}/>

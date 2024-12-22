@@ -1,6 +1,5 @@
 /* eslint-disable react/prop-types */
 import { useState, useEffect } from "react";
-import { HiOutlineXMark } from "react-icons/hi2";
 import { HiMiniXCircle } from "react-icons/hi2";
 
 

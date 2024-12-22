@@ -113,4 +113,5 @@ if __name__ == '__main__':
     print("Listening on port 5000")
     worker_thread = threading.Thread(target=worker, daemon=True)
     worker_thread.start()
-    socketio.run(app, debug=True, port=5000)
+    print("Running socketio on 10.191.108.121")
+    socketio.run(app, debug=True, host="10.191.108.121", port=5051)
