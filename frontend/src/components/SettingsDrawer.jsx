@@ -1,5 +1,6 @@
 import { useState, useEffect } from "react";
 
+// eslint-disable-next-line react/prop-types
 const SettingsDrawer = ({settingsOpen, closeSettings}) => {
     const [sBaseOpen, setSBaseOpen] = useState(true);
     const [sImage2ImageOpen, setImage2ImageOpen] = useState(false);
@@ -45,10 +46,8 @@ const SettingsDrawer = ({settingsOpen, closeSettings}) => {
             setSeed(Math.floor(Math.random() * 10000000))
     }, [seed])
 
-    console.log(resoloutionRadio)
-
     return (
-        <div className={`flex flex-col h-screen bg-secondary-mustard absolute top-0 overflow-scroll max-h-screen ${
+        <div className={`flex flex-col h-screen bg-secondary-mustard absolute top-0 overflow-auto max-h-screen ${
                 settingsOpen ? 'left-0' : '-left-full'
             } w-5/6 md:w-1/6 transition-all duration-200 ease-in-out`}>
             <h1 className='w-full text-center text-text-primary text-2xl font-bold'>Settings</h1>
@@ -56,7 +55,7 @@ const SettingsDrawer = ({settingsOpen, closeSettings}) => {
             <ul className="flex flex-col gap-4">
                 <li className='w-full text-left relative'>
                     <h2 className='text-text-primary ml-2 text-xl font-semibold' onClick={openBase}>Base generation</h2>
-                    <div className={`flex flex-col w-full px-2 overflow-hidden border-t-2 gap-1 border-text-primary text-text-primary text-lg ${sBaseOpen ? 'max-h-[120rem] overflow-scroll' : 'max-h-0'} transition-all duration-200`}>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden border-t-2 gap-1 border-text-primary text-text-primary text-lg ${sBaseOpen ? 'max-h-[120rem] overflow-auto' : 'max-h-0'} transition-all duration-200`}>
                         
                         <div className="flex flex-col mt-2">
                             <div className="flex flex-row gap-2 align-middle w-full">
@@ -119,7 +118,7 @@ const SettingsDrawer = ({settingsOpen, closeSettings}) => {
 
                 <li className='w-full text-left relative'>
                     <h2 className='text-text-primary ml-2 text-xl font-semibold' onClick={openI2I}>Image2Image</h2>
-                    <div className={`flex flex-col w-full px-2 overflow-hidden border-t-2 border-text-primary text-text-primary text-lg ${sImage2ImageOpen ? 'max-h-96 overflow-scroll' : 'max-h-0'} transition-all duration-200`}>
+                    <div className={`flex flex-col w-full px-2 overflow-hidden border-t-2 border-text-primary text-text-primary text-lg ${sImage2ImageOpen ? 'max-h-96 overflow-auto' : 'max-h-0'} transition-all duration-200`}>
                         <div className="flex flex-col mt-2">
                             <div className="flex flex-row gap-2 align-middle w-full">
                                 <label htmlFor="negPrompt" className="">Use negative prompt?</label>

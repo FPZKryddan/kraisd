@@ -3,6 +3,7 @@ import './App.css'
 import {io} from 'socket.io-client'
 import { HiOutlineCog8Tooth, HiArrowPath } from "react-icons/hi2";
 import SettingsDrawer from './components/SettingsDrawer';
+import HistoryDrawer from './components/HistoryDrawer';
 
 
 function App() {
@@ -18,6 +19,7 @@ function App() {
     const api = import.meta.env.VITE_BACKEND_URL;
 
     const [settingsOpen, setSettingsOpen] = useState(false);
+    const [historyOpen, setHistoryOpen] = useState(false);
 
     useEffect(() => {
         if (!window.socket) {
@@ -97,9 +99,12 @@ function App() {
     const handleClick = () => {
         if (settingsOpen)
             toggleSettings()
+        if (historyOpen)
+            toggleHistory()
     }
 
     const toggleSettings = () => {setSettingsOpen(!settingsOpen)}
+    const toggleHistory = () => {setHistoryOpen(!historyOpen)}
 
     return (
         <div className="container max-w-full m-0 p-5 h-screen 
@@ -107,14 +112,15 @@ function App() {
                         flex flex-col justify-center">
             <div className="flex flex-col h-full gap-5" onClick={handleClick}>
                 <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
-                <textarea className="p-3 rounded-md w-full md:w-1/2 self-center text-text-black placeholder:text-text-muted placeholder:text-center" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
+                <textarea className="p-3 rounded-md w-full md:w-1/2 self-center text-text-black placeholder:text-text-muted placeholder:text-center resize-none" id='prompt' type='text' rows="1" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
                 <div className='flex flex-row gap-4 justify-center'>
-                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl text-text-primary cursor-pointer'><HiOutlineCog8Tooth className='size-[40px] w-full' onClick={toggleSettings}/></button>
-                    <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl text-text-primary text-2xl font-bold'>Generate</button>
-                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl drop-s text-text-primary relative'><HiArrowPath className='size-[40px] w-full'/><p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full'>1</p></button>
+                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl hover:contrast-150 text-text-primary cursor-pointer'><HiOutlineCog8Tooth className='size-[40px] w-full' onClick={toggleSettings}/></button>
+                    <button className='w-[175px] h-[50px] bg-accent-green rounded-3xl drop-shadow-3xl hover:contrast-150 text-text-primary text-2xl font-bold'>Generate</button>
+                    <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl hover:contrast-150 text-text-primary relative'><HiArrowPath className='size-[40px] w-full' onClick={toggleHistory}/><p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full animate-bounce'>1</p></button>
                 </div>
             </div>
             <SettingsDrawer settingsOpen={settingsOpen} closeSettings={toggleSettings}/>
+            <HistoryDrawer historyOpen={historyOpen} closeHistory={toggleHistory}/>
             {/* <div className="flex flex-col basis-1/5 h-full 
                             bg-secondary-coral
                             rounded-lg border-neutral-muted border-2
