@@ -114,4 +114,4 @@ if __name__ == '__main__':
     worker_thread = threading.Thread(target=worker, daemon=True)
     worker_thread.start()
     print("Running socketio on 10.191.108.121")
-    socketio.run(app, debug=True, host="10.191.108.121", port=5051)
+    socketio.run(app, debug=True, host="0.0.0.0", port=5051) 

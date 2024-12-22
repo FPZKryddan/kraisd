@@ -29,7 +29,7 @@ const HistoryDrawer = ({historyOpen, closeHistory, images, queue, setPreview, de
                 </li>
                 <li className='w-full h-2/3 text-left relative'>
                     <h2 className='text-text-primary ml-2 text-xl font-semibold border-b-2 border-text-primary'>Gallery</h2>
-                    <ul className="grid grid-cols-3 content-start w-full h-full overflow-auto p-5 gap-1">
+                    <ul className="grid grid-cols-2 md:grid-cols-3 content-start w-full h-full overflow-auto p-5 gap-1">
                         {images.map((img, idx) => 
                             <li key={idx} className="group" onClick={() => setPreview(img)}>
                                 <img className="group-hover:border-2 group-hover:cursor-pointer" src={img}></img>
