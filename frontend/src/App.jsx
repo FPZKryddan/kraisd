@@ -148,7 +148,7 @@ function App() {
         <div className="container max-w-full m-0 p-5 h-screen bg-primary-indigo
         flex flex-col justify-center overflow-x-hidden">
             <div className="flex flex-col h-full gap-5" onClick={handleClick}>
-                <img className='w-[170px] h-[50px] mt-5 self-center' src='/logo.svg'></img>
+                <img className='w-[170px] h-[50px] mt-5 self-center' src='./logo.svg'></img>
                 <input className="p-3 rounded-md w-full md:w-1/2 self-center text-text-black placeholder:text-text-muted placeholder:text-center 
                     resize-none" id='prompt' type='text' placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></input>
 
