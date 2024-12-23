@@ -1,6 +1,7 @@
 # Kraisd
  
-Kraisd is a Stable Diffusion Web UI made for personal educational purposes. It currently supports text-to-image generation and basic configuration settings.
+Kraisd is a Stable Diffusion Web UI made for personal educational purposes. It currently supports text-to-image generation and basic configuration settings. 
+Public [Demo](https://fpzkryddan.github.io/kraisd/) of the frontend is available here, the backend is not hosted so no requests can be made!
 ![image](https://github.com/user-attachments/assets/5660e051-6547-4a12-95b6-d643a84533f0)
 
 
