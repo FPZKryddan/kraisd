@@ -159,13 +159,15 @@ function App() {
                     <button className='w-[175px] h-[50px] bg-accent-green rounded-xl drop-shadow-3xl hover:contrast-150 text-text-primary text-2xl font-bold' onClick={submitPrompt}>Generate</button>
                     <button className='size-[50px] bg-neutral-light rounded-full drop-shadow-3xl hover:contrast-150 text-text-primary relative md:hidden'>
                         <HiArrowPath className='size-[40px] w-full' onClick={toggleHistory}/>
-                        <p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full animate-bounce'>1</p>
+                        {queue.length > 0 &&
+                            <p className='size-5 leading-5 text-lg absolute top-0 right-0 bg-secondary-coral text-center rounded-full animate-bounce'>{queue.length}</p>
+                        }
                     </button>
                 </div>
 
 
                 {image 
-                    ? <img className="self-center shadow-xl drop-shadow-2xl" src={image} style={{ width: "auto", height: "auto" }}/>
+                    ? <img className="self-center shadow-xl drop-shadow-2xl max-h-[66%]" src={image} style={{ width: "auto", height: "auto" }} onClick={() => setPreviewImage(image)}/>
                     : <h1 className="self-center text-text-primary text-3xl">No images generated yet! Generate one now!</h1>
                 }
                 <Progressbar visible={generating} value={generatedSteps} max={totalGenerationSteps} />
@@ -179,61 +181,6 @@ function App() {
                     <img src={previewImage} className='fixed top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2'></img>
                 </div> 
             }
-            {/* <div className="flex flex-col basis-1/5 h-full 
-                            bg-secondary-coral
-                            rounded-lg border-neutral-muted border-2
-                            p-5 gap-2">
-                <h1 className="text-text-primary text-center text-3xl font-bold">Generation settings</h1>
-
-                <label htmlFor="prompt" className='text-text-primary text-xl'>Prompt</label>
-                <textarea className="p-3 rounded-md" id='prompt' type='text' rows="5" placeholder='Type prompt here...' value={prompt} onChange={(e) => setPrompt(e.target.value)}></textarea>
-
-                <label htmlFor="negprompt" className='text-text-primary text-xl'>Negative Prompt</label>
-                <textarea className="p-3 rounded-md" id='negprompt' type='text' rows="5" placeholder='Type negative prompt here...' value={negPrompt} onChange={(e) => setNegPrompt(e.target.value)}></textarea>
-
-                <div className='flex flex-row gap-10'>
-                    <div className='flex flex-col basis-1/2'>
-                        <label htmlFor='steps' className='text-text-primary text-xl'>Steps: {steps}</label>
-                        <input className="" type='range' min="1" max="200" step="1"id="steps" value={steps} onChange={(e) => setSteps(e.target.value)}></input>
-
-                    </div>
-
-                    <div className='flex flex-col basis-1/2'>
-                        <label htmlFor='cfg' className='text-text-primary text-xl'>Guidance Scale: {cfg}</label>
-                        <input className="" type='range' min="1" max="30" step="0.5" id="cfg" value={cfg} onChange={(e) => setCFG(e.target.value)}></input>
-                    </div>
-                </div>
-
-                <label htmlFor='seed' className='text-text-primary text-xl'>Seed:</label>
-                <input className="p-2 rounded-md" type='number' max="10000000" id="seed" value={seed} disabled={randomize} onChange={(e) => setSeed(e.target.value)}></input>
-                <div className='flex flex-row gap-2 text-xl'>
-                    <label htmlFor='randomizeCheck' className='text-text-primary'>Randomize seed?</label>
-                    <input id="randomizeCheck" className="size-6 self-end" type="checkbox" checked={randomize} onClick={toggleRandomize}></input>
-                </div>
-
-                <button className="bg-accent-green rounded-md self-center m-5 p-2
-                                    hover:bg-blue-900 text-text-primary text-2xl shadow-lg hover:shadow-2xl hover:drop-shadow-2xl
-                                    transition-all duration-100 ease-in-out"
-                onClick={submitPrompt}>Generate Image</button>
-            </div>
-            <div className="flex flex-col basis-3/5 h-full bg-transparent items-center">
-                <div className={'w-3/4 text-text-primary text-lg ' + (generating == true ? "visible" : "invisible")}>
-                    <label htmlFor="generationProgress">Generation steps: {generatedSteps} / {totalGenerationSteps}</label>
-                    <progress id="generationProgress" className="w-full" value={generatedSteps} max={totalGenerationSteps}></progress>
-
-                </div>
-                {image && <img className="self-center shadow-xl drop-shadow-2xl hover:cursor-pointer hover:border-8 transition-all duration-75 ease-in-out" src={image} style={{ width: "auto", height: "auto" }}/>}
-            </div>
-            <div className="flex flex-col basis-1/5 h-full p-5 bg-slate-500 bg-opacity-30 rounded-lg border-white border-2">
-                <h2 className='text-center text-2xl text-text-primary border-b-2' >Queue</h2>
-                <ul className=''>
-                    {queue.map((item) => (
-                        <li key={item.id}
-                            className='text-text-primary text-xl'>{item.id}</li>
-                    ))}
-                </ul>
-
-            </div>*/}
         </div> 
     )
 }
